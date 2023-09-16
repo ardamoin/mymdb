@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import options from "../options";
+import { useParams } from "react-router-dom";
 
-const Media = ({ media_id, media_type }) => {
+const Media = () => {
   const [mediaInfo, setMediaInfo] = useState({});
   const [mediaVideoLink, setMediaVideoLink] = useState("");
+  const { media_type, media_id } = useParams();
 
   useEffect(() => {
     let infoFetchURL;
@@ -56,20 +58,31 @@ const Media = ({ media_id, media_type }) => {
     <div>
       <br />
       <img
-        src={`https://image.tmdb.org/t/p/original${mediaInfo.poster_path || mediaInfo.profile_path}`}
-        alt={`${mediaInfo.name} poster`}
+        src={`https://image.tmdb.org/t/p/original${
+          mediaInfo.poster_path || mediaInfo.profile_path
+        }`}
+        alt={`${mediaInfo.name || mediaInfo.title} poster`}
         width="200"
       />
 
       <br />
       <br />
       <h1>
-        {mediaInfo.name} ({media_type})
+        {mediaInfo.name || mediaInfo.title} ({media_type})
       </h1>
       <p>{mediaInfo.overview || mediaInfo.biography}</p>
       <br />
       {(media_type === "movie" || media_type === "tv") && (
-        <a href={mediaVideoLink} target="_blank" rel="noreferrer">
+        <a
+          href={mediaVideoLink}
+          target="_blank"
+          rel="noreferrer"
+          onClick={(e) => {
+            if (mediaVideoLink === "") {
+              e.preventDefault();
+            }
+          }}
+        >
           Watch here
         </a>
       )}
@@ -105,10 +118,5 @@ const Media = ({ media_id, media_type }) => {
     </div>
   );
 };
-
-/*
-TODO:
-Pass media_id and media_type as URL params.
-*/
 
 export default Media;

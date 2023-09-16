@@ -6,16 +6,23 @@ import Media from "./components/Media";
 import SearchResults from "./components/SearchResults";
 import SignUp from "./components/SignUp";
 
+import { Routes, Route } from "react-router-dom";
+import './App.css'
+
 function App() {
   return (
     <div className="App">
-      <Header/>
-      {/* <Home /> */}
-      {/* <SearchResults searchTerm={'brad pitt'}/> */}
-      {/* <Media media_id={114461} media_type={'tv'}/> */}
-      {/* <Favorites user='Mark'/> */}
-      {/* <SignUp /> */}
-      {/* <LogIn /> */}
+      <Header />
+      <div className="routes">
+        <Routes>
+          <Route path='/' element={<Home />}/>
+          <Route path='/search_results/:searchTerm' element={<SearchResults searchTerm={'brad pitt'}/>}/>
+          <Route path='/media/:media_type/:media_id' element={<Media media_id={114461} media_type={'tv'}/>}/>
+          <Route path='/favorites' element={<Favorites user='Mike'/>}/>
+          <Route path='/signup' element={<SignUp />}/>
+          <Route path='/login' element={<LogIn />}/>
+        </Routes>
+      </div>
     </div>
   );
 }
