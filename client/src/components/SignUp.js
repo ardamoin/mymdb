@@ -15,27 +15,22 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    fetch("http://localhost:5000/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        // Handle the response from the server
-        if (response.ok) {
-          alert("registration successful");
-        } else {
-          alert("failed to register");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const response = await fetch("http://localhost:5000/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
+      const responseData = await response.json();
+      alert(responseData.message);
+    } catch (err) {
+      console.error("Error:", err);
+    }
   };
 
   return (

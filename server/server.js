@@ -1,15 +1,21 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./db");
-
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
 // Use the cors middleware to enable CORS for your server
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000", // Frontend address
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
+// Use cookie-parser middleware to parse every cookie
+app.use(cookieParser());
 
 const authRouter = require("./routes/auth");
-
 
 db.connect((err) => {
   if (err) {
