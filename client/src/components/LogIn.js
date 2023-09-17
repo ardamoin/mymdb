@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import jwt from "jwt-decode";
+import UserContext from "../context/user-context";
 
 const LogIn = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const ctx = useContext(UserContext);
+
+  console.log("User Id: ", ctx.id);
+  console.log("User email: ", ctx.email);
+  console.log("User username: ", ctx.username);
 
   const navigate = useNavigate();
 
@@ -25,21 +32,25 @@ const LogIn = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-        credentials: 'include'
+        credentials: "include",
       });
-
-      const accessTokenCookie = document.cookie
-        .split("; ")
-        .find((cookie) => cookie.startsWith("access-token="))
-        .replace("access-token=", "");
-      console.log(jwt(accessTokenCookie));
-
-      // console.log(document.cookie)
 
       const responseData = await response.json();
       alert(responseData.message);
 
       if (response.ok) {
+        const accessTokenCookie = document.cookie
+          .split("; ")
+          .find((cookie) => cookie.startsWith("access-token="))
+          .replace("access-token=", "");
+
+        const decodedCookie = jwt(accessTokenCookie);
+
+        ctx.setUser({
+          id: decodedCookie.id,
+          email: decodedCookie.email,
+          username: decodedCookie.username,
+        });
         return navigate("/");
       }
     } catch (err) {

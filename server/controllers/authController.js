@@ -32,11 +32,24 @@ exports.register = (req, res) => {
           password: hashedPassword,
         },
         (error, result) => {
+          const newUserId = result.insertId;
+
           if (error) {
             console.log(error);
             return res.status(500).json({ message: "Internal server error" }); // Handle the database error
           } else {
             console.log(result);
+
+            const accessToken = createToken({
+              id: newUserId,
+              email: email,
+              username: username,
+            });
+
+            res.cookie("access-token", accessToken, {
+              maxAge: 60 * 60 * 24 * 30 * 1000,
+            });
+
             return res.status(200).json({ message: "User registered" });
           }
         }

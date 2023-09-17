@@ -1,10 +1,13 @@
-import React from "react";
+import { useContext } from "react";
+import UserContext from "../context/user-context";
 
 const Favorites = ({ user }) => {
+  const ctx = useContext(UserContext);
+
   return (
     <div>
       <br />
-      <h1>Hi {user}! Here are some of your favorite movies and tv shows:</h1>
+      <h1>Hi {ctx.username}! Here are some of your favorite movies and tv shows:</h1>
       <div>
         <img
           src={`https://image.tmdb.org/t/p/original/gmECX1DvFgdUPjtio2zaL8BPYPu.jpg`}
