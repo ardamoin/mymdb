@@ -51,10 +51,10 @@ const LogIn = () => {
             email: decodedCookie.email,
             username: decodedCookie.username,
           });
-          return navigate("/");
-        } else {
-          console.log("Login failed");
+          navigate("/");
         }
+      } else {
+        console.log("Login failed");
       }
     } catch (err) {
       console.error("Error:", err);
