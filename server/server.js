@@ -2,6 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./db");
 const cookieParser = require("cookie-parser");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
 
@@ -34,6 +37,8 @@ app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/favorites", favoritesRouter);
 
-app.listen(5000, () => {
-  console.log("Server started on port 5000");
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+  console.log("Server started");
 });
