@@ -83,6 +83,7 @@ exports.login = (req, res) => {
 
         res.cookie("access-token", accessToken, {
           maxAge: 60 * 60 * 24 * 30 * 1000,
+          httpOnly: true,
         });
 
         return res.status(200).json({ message: "logged in" });
