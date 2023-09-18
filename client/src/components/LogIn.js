@@ -11,10 +11,6 @@ const LogIn = () => {
 
   const ctx = useContext(UserContext);
 
-  console.log("User Id: ", ctx.id);
-  console.log("User email: ", ctx.email);
-  console.log("User username: ", ctx.username);
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
