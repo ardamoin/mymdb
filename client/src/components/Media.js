@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import options from "../options";
 import { useParams } from "react-router-dom";
+import UserContext from "../context/user-context";
 
 const Media = () => {
   const [mediaInfo, setMediaInfo] = useState({});
   const [mediaVideoLink, setMediaVideoLink] = useState("");
+  const [isFavorite, setIsFavorite] = useState(false);
   const { media_type, media_id } = useParams();
+  const ctx = useContext(UserContext);
 
   useEffect(() => {
     let infoFetchURL;
@@ -52,7 +55,52 @@ const Media = () => {
           }
         });
     }
-  }, []);
+
+    if (ctx.id) {
+      const movieIsFavorite = async () => {
+        try {
+          const response = await fetch("http://localhost:5000/favorites", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: ctx.id }),
+          });
+          const data = await response.json();
+          const favorites = data.favorites;
+
+          for (let media of favorites) {
+            if (media.media_id === +media_id) {
+              setIsFavorite(true);
+            }
+          }
+          return isFavorite;
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      movieIsFavorite();
+    }
+  }, [ctx.id, isFavorite]);
+
+  const addToFavsHandler = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/favorites/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user_id: ctx.id, media_id, media_type }),
+      });
+
+      const data = await response.json();
+      setIsFavorite(true);
+      alert(data.message);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div>
@@ -105,13 +153,9 @@ const Media = () => {
       <br />
       <br />
 
-      <button
-        onClick={() => {
-          alert("Added to favorites");
-        }}
-      >
-        Add to favorites
-      </button>
+      {!isFavorite && (
+        <button onClick={addToFavsHandler}>Add to favorites</button>
+      )}
 
       <br />
       <br />

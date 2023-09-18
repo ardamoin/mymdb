@@ -16,6 +16,7 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 
 const authRouter = require("./routes/auth");
+const favoritesRouter = require("./routes/favorites");
 
 db.connect((err) => {
   if (err) {
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/auth", authRouter);
+app.use("/favorites", favoritesRouter);
 
 app.listen(5000, () => {
   console.log("Server started on port 5000");

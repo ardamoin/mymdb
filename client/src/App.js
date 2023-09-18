@@ -48,7 +48,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route
               path="/search_results/:searchTerm"
-              element={<SearchResults searchTerm={"brad pitt"} />}
+              element={<SearchResults />}
             />
             <Route path="/media/:media_type/:media_id" element={<Media />} />
             <Route path="/favorites" element={<Favorites user="Mike" />} />
