@@ -48,6 +48,8 @@ exports.register = (req, res) => {
 
             res.cookie("access-token", accessToken, {
               maxAge: 60 * 60 * 24 * 30 * 1000,
+              secure: true,
+              sameSite: "None",
             });
 
             return res.status(200).json({ message: "User registered" });
@@ -82,7 +84,9 @@ exports.login = (req, res) => {
         const accessToken = createToken(user);
 
         res.cookie("access-token", accessToken, {
-          maxAge: 60 * 60 * 24 * 30 * 1000
+          maxAge: 60 * 60 * 24 * 30 * 1000,
+          secure: true,
+          sameSite: "None",
         });
 
         return res.status(200).json({ message: "logged in" });
