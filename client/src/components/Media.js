@@ -59,7 +59,7 @@ const Media = () => {
     if (ctx.id) {
       const movieIsFavorite = async () => {
         try {
-          const response = await fetch("http://localhost:5000/favorites", {
+          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/favorites`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const Media = () => {
 
   const addToFavsHandler = async () => {
     try {
-      const response = await fetch("http://localhost:5000/favorites/add", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/favorites/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -143,7 +143,7 @@ const Media = () => {
         <li>User: TestUser2, Comment: This is also a test comment</li>
       </ul>
 
-      <form method="POST" action="localhost:3000">
+      <form>
         <label htmlFor="comment">Leave a comment</label>
         <br />
         <input name="comment" type="text" placeholder="Comment..." />

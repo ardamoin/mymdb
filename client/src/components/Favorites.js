@@ -12,7 +12,7 @@ const Favorites = () => {
   useEffect(() => {
     const getFavoritesFromBackend = async () => {
       try {
-        const response = await fetch("http://localhost:5000/favorites", {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/favorites`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -62,7 +62,7 @@ const Favorites = () => {
 
   const removeFavHandler = async (media_id, media_type) => {
     try {
-      const response = await fetch("http://localhost:5000/favorites/remove", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/favorites/remove`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
