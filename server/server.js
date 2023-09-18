@@ -9,11 +9,11 @@ dotenv.config();
 const app = express();
 
 // Use the cors middleware to enable CORS for your server
-// const corsOptions = {
-//   origin: "https://main--mymdb-3741e5.netlify.app", // Frontend address
-//   credentials: true,
-// };
-// app.use(cors(corsOptions));
+const corsOptions = {
+  origin: "https://mymdb-3741e5.netlify.app", // Frontend address
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 // Use cookie-parser middleware to parse every cookie
 app.use(cookieParser());
