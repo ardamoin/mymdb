@@ -22,14 +22,17 @@ const LogIn = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+          credentials: "include",
+        }
+      );
 
       const responseData = await response.json();
       alert(responseData.message);
@@ -37,17 +40,21 @@ const LogIn = () => {
       if (response.ok) {
         const accessTokenCookie = document.cookie
           .split("; ")
-          .find((cookie) => cookie.startsWith("access-token="))
-          .replace("access-token=", "");
+          .find((cookie) => cookie.startsWith("access-token="));
 
-        const decodedCookie = jwt(accessTokenCookie);
+        if (accessTokenCookie) {
+          const accessToken = accessTokenCookie.replace("access-token=", "");
+          const decodedCookie = jwt(accessToken);
 
-        ctx.setUser({
-          id: decodedCookie.id,
-          email: decodedCookie.email,
-          username: decodedCookie.username,
-        });
-        return navigate("/");
+          ctx.setUser({
+            id: decodedCookie.id,
+            email: decodedCookie.email,
+            username: decodedCookie.username,
+          });
+          return navigate("/");
+        } else {
+          console.log("Login failed");
+        }
       }
     } catch (err) {
       console.error("Error:", err);
