@@ -10,7 +10,7 @@ const app = express();
 
 // Use the cors middleware to enable CORS for your server
 const corsOptions = {
-  origin: "http://localhost:3000", // Frontend address
+  origin: "https://main--mymdb-3741e5.netlify.app", // Frontend address
   credentials: true,
 };
 app.use(cors(corsOptions));
