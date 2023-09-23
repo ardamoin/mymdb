@@ -10,7 +10,7 @@ const app = express();
 
 // Use the cors middleware to enable CORS for your server
 const corsOptions = {
-  origin: "https://mymdb-3741e5.netlify.app", // Frontend address
+  origin: process.env.CLIENT_ORIGIN, // Frontend address
   credentials: true,
 };
 app.use(cors(corsOptions));
