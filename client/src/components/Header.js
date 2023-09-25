@@ -5,9 +5,11 @@ import UserContext from "../context/user-context";
 const Header = () => {
   const ctx = useContext(UserContext);
 
-  const signOutHandler = () => {
-    document.cookie =
-      "access-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Deletes cookie
+  const signOutHandler = async () => {
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/logout`, {
+      method: "GET",
+      credentials: "include",
+    }); // Deletes cookie
     ctx.setUser({});
     alert("Signed out");
   };

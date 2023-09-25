@@ -96,3 +96,12 @@ exports.login = (req, res) => {
     });
   });
 };
+
+exports.logout = (req, res) => {
+  res.cookie('access-token', '', {
+    expires: new Date(0),
+    secure: true,
+    sameSite: "None",
+    domain: process.env.DOMAIN
+  }).send();
+}
