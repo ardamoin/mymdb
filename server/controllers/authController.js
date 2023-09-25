@@ -50,6 +50,7 @@ exports.register = (req, res) => {
               maxAge: 60 * 60 * 24 * 30 * 1000,
               secure: true,
               sameSite: "None",
+              domain: process.env.DOMAIN,
             });
 
             return res.status(200).json({ message: "User registered" });
@@ -87,6 +88,7 @@ exports.login = (req, res) => {
           maxAge: 60 * 60 * 24 * 30 * 1000,
           secure: true,
           sameSite: "None",
+          domain: process.env.DOMAIN,
         });
 
         return res.status(200).json({ message: "logged in" });
